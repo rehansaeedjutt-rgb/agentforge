@@ -49,6 +49,9 @@ class MockLLMClient(LLMClient):
     Produces responses that depend only on the prompt content — no
     randomness, no network, no API key. This makes it possible to
     write end-to-end tests of the debate logic without flakiness.
+
+    Canned responses are matched case-insensitively: a key "bull"
+    matches any prompt containing "bull", "Bull", or "BULL".
     """
 
     def __init__(self, canned_responses: dict[str, str] | None = None) -> None:
@@ -73,12 +76,11 @@ class MockLLMClient(LLMClient):
     def complete(self, prompt: str, max_tokens: int = 512) -> str:
         self._call_count += 1
         self._history.append(prompt)
+        prompt_lower = prompt.lower()
         for key, response in self._canned.items():
-            if key in prompt:
+            if key.lower() in prompt_lower:
                 return response[:max_tokens]
-        # Default: echo a short deterministic response.
         return f"[mock:{self._call_count}] {prompt[:120]}"
 
 
-# Default timeout used by real providers.
 DEFAULT_TIMEOUT_SECONDS: Final[float] = 30.0

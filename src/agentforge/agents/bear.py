@@ -23,9 +23,9 @@ class BearAgent(Agent):
     def build_prompt(self, topic: str, transcript: DebateTranscript) -> str:
         prior = self._render_prior(transcript)
         return (
-            f"You are the BEAR agent. Topic: {topic}\\n"
-            f"Your perspective: {self.perspective}\\n"
-            f"Prior messages:\\n{prior}\\n"
+            f"You are the BEAR agent. Topic: {topic}\n"
+            f"Your perspective: {self.perspective}\n"
+            f"Prior messages:\n{prior}\n"
             "State the strongest negative case in 3 sentences. Be specific."
         )
 
@@ -35,4 +35,4 @@ class BearAgent(Agent):
         for turn in transcript.turns:
             for msg in turn.messages:
                 lines.append(f"  [{msg.role.value}] {msg.content}")
-        return "\\n".join(lines) if lines else "  (no prior messages)"
+        return "\n".join(lines) if lines else "  (no prior messages)"
