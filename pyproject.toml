@@ -1,0 +1,80 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentforge"
+version = "0.1.0"
+description = "Multi-agent AI research system with structured debate and honest confidence scoring."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Muhammad Rehan Saeed" },
+]
+keywords = ["ai", "multi-agent", "llm", "crypto", "research", "agents", "debate"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "pydantic>=2.13",
+    "pydantic-settings>=2.15",
+    "structlog>=26.0",
+    "python-dotenv>=1.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=9.0",
+    "pytest-asyncio>=1.4",
+    "pytest-cov>=7.0",
+    "ruff>=0.16",
+    "mypy>=2.4",
+]
+groq = [
+    "groq>=0.11",
+]
+
+[project.urls]
+Homepage = "https://github.com/rehansaeedjutt-rgb/agentforge"
+Repository = "https://github.com/rehansaeedjutt-rgb/agentforge"
+Issues = "https://github.com/rehansaeedjutt-rgb/agentforge/issues"
+
+[project.scripts]
+agentforge = "agentforge.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "B", "C4", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "-ra --strict-markers --strict-config"
+
+[tool.coverage.run]
+source = ["src/agentforge"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
